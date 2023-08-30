@@ -11,30 +11,37 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
     ////////reponse api ok 
         http_response_code(200);
 
+ if(isset($_GET['tutoID'])) {
     ////////appel methodes
 
-    include('../cnx.php');
-    /*include('../classes/TutoManager.php');
-    include('../classes/Tuto.php');*/
-    spl_autoload_register(function($class) {
-        include('../classes/'.$class.'.php');
-    });
+        include('../cnx.php');
+        /*include('../classes/TutoManager.php');
+        include('../classes/Tuto.php');*/
+        spl_autoload_register(function($class) {
+            include('../classes/'.$class.'.php');
+        });
 
-    $manager = new TutoManager($cnx);
-    $tuto = $manager->ReadTuto($_GET['tutoID']);
-    ////////appel methodes
+        $manager = new TutoManager($cnx);
+        $tuto = $manager->ReadTuto($_GET['tutoID']);
+        ////////appel methodes
 
-    ////////envoi donnés json
-            $msg = array(
-                'titre'       => $tuto->getTitre(),
-                'description' => $tuto->getDescription(),
-                'url'         => $tuto->getUrl()
+        ////////envoi donnés json
+                $msg = array(
+                    'titre'       => $tuto->getTitre(),
+                    'description' => $tuto->getDescription(),
+                    'url'         => $tuto->getUrl()
+
+                );
+            
+            echo json_encode($msg);
+        ////////envoi donnés json
+    } else {
+        $message = array(
+            'msgErreur'   => 'Aucune donnée disponible'
 
             );
-        
-        echo json_encode($msg);
-    ////////envoi donnés json
-
+            echo json_encode($message);
+        }
 
 
 

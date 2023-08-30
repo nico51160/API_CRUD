@@ -7,6 +7,20 @@ class TutoManager {
     }
 
 /***********************************inserer */
+public function CreateTuto(Tuto $tuto) {
+    $sql = 'INSERT INTO tuto
+    (titre, description, url) VALUES
+    (:titre, :description, :url)';
+    $req = $this->cnx->prepare($sql);
+    $req->bindValue(':titre', $tuto->getTitre(), PDO::PARAM_STR);
+    $req->bindValue(':description', $Description->getTitre(), PDO::PARAM_STR);
+    $req->bindValue(':url', $tuto->getUrl(), PDO::PARAM_STR);
+    $req->execute();
+
+
+
+
+}
 /***********************************inserer */
 
 /***********************************afficher 1 tuto*/
