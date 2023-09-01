@@ -15,6 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = json_decode(file_get_contents("php://input"), true);
 
         if( !empty($data['titre']) && !empty($data['description']) && !empty($data['url']) ) {
+            http_response_code(201);
 
                     ////////appel methodes
 
@@ -25,34 +26,38 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 include('../classes/'.$class.'.php');
             });
 
-            $manager = new TutoManager($cnx);
-            $tuto = $manager->ReadTuto($_GET['tutoID']);
-            ////////appel methodes
+            $tuto = new Tuto();
+            $tuto->setTitre($data['titre']);
+            $tuto->setDescription($data['description']);
+            $tuto->setUrl($data['url']);
 
-        } else {
-            http_response_code(405);
+
+
+            $manager = new TutoManager($cnx);
+            $manager->CreateTuto($tuto);
+
             $message = array(
-                'msgErreur'   => 'une erreur est survenue',
-                'explication' => 'les champs titre, dscription et url sont obligatoires'
+                'msg'   => 'Insertion réussie'
             );
             echo json_encode($message);
         }
-      //////// Traitement des infos recues
-
-
-
-
-
-
-
-
+            
+            ////////appel methodes
 
 } else {
-    ////////reponse api ko
     http_response_code(405);
     $message = array(
-        'msgErreur'   => 'Methode non autorisée',
-        'explication' => 'vous devez utiliser la methode POST'
+        'msgErreur'   => 'une erreur est survenue',
+        'explication' => 'les champs titre, dscription et url sont obligatoires'
     );
     echo json_encode($message);
 }
+//////// Traitement des infos recues
+
+
+
+
+
+
+
+

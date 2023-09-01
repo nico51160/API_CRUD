@@ -9,11 +9,11 @@ class TutoManager {
 /***********************************inserer */
 public function CreateTuto(Tuto $tuto) {
     $sql = 'INSERT INTO tuto
-    (titre, description, url) VALUES
-    (:titre, :description, :url)';
+            (titre, description, url) VALUES
+            (:titre, :description, :url)';
     $req = $this->cnx->prepare($sql);
     $req->bindValue(':titre', $tuto->getTitre(), PDO::PARAM_STR);
-    $req->bindValue(':description', $Description->getTitre(), PDO::PARAM_STR);
+    $req->bindValue(':description', $tuto->getDescription(), PDO::PARAM_STR);
     $req->bindValue(':url', $tuto->getUrl(), PDO::PARAM_STR);
     $req->execute();
 
@@ -74,6 +74,18 @@ public function compterTuto() {
 
 
 /***********************************modifier tuto */
+public function UpdateTuto(Tuto $tuto) {
+    $sql = 'UPDATE tuto SET
+            titre = :titre, description = :description, url = :url
+            WHERE tutoID = :tutoID';
+           
+    $req = $this->cnx->prepare($sql);
+    $req->bindValue(':tutoID', $tuto->getTutoID(), PDO::PARAM_INT);
+    $req->bindValue(':titre', $tuto->getTitre(), PDO::PARAM_STR);
+    $req->bindValue(':description', $tuto->getDescription(), PDO::PARAM_STR);
+    $req->bindValue(':url', $tuto->getUrl(), PDO::PARAM_STR);
+    $req->execute();
+}
 /***********************************modifier tuto */
 
 /***********************************supprimer tuto */
