@@ -89,6 +89,14 @@ public function UpdateTuto(Tuto $tuto) {
 /***********************************modifier tuto */
 
 /***********************************supprimer tuto */
+public function DeleteTuto($id) {
+    $sql = 'DELETE FROM tuto 
+            WHERE tutoID = :id';
+    $req = $this->cnx->prepare($sql);
+    $req->bindValue(':id', $id, PDO::PARAM_INT);
+    $req->execute();
+
+}
 /***********************************supprimer tuto */
 
 
